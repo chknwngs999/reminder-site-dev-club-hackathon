@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}{% endblock %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="icon" type="image/gif" href="{{ url_for('static',filename='reminderclip.png') }}">
+  </head>
+  <body>
+    <header>
+      <div id="titlediv">
+        {% block header %}{% endblock %}
+      </div>
+      <div id="titleimg">
+        {% block images %}{% endblock %} 
+      </div>
+    </header>  
+    <main>
+      {% block main %}{% endblock %}
+    </main>
+    <footer>
+      {% block footer %}{% endblock %}
+    </footer>
+  </body>
+</html>

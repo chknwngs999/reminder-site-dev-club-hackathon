@@ -1,0 +1,51 @@
+{% extends "template.html"%}
+
+{% block title %}
+<title>Element Deletion Form</title>
+{% endblock %}
+
+{% block header %}
+<h1 id="title">Element Deletion Form</h1>
+{% endblock %}
+{% block images %}
+<a href="/"><img src="{{ url_for('static', filename='homebutton.png') }}" id="sign" width="40px" height="40px"></a>
+{% endblock %}
+
+{% block main %}
+  {% if currentuser %}
+    {% if message %}
+      <p>{{ message }}</p>
+    {% else %}
+    <p id="label">Element Location: </p>
+    <form action="" method="post">
+      {% if elementsByUser[currentuser]["l0l"] %}
+        {% for i in range(elementsByUser[currentuser]["l0l"]|length) %}
+          <input type="radio" id="l0b" value='0{{ elementsByUser[currentuser]["l0l"][i] }}' name="level">
+          <label for ='{{ elementsByUser[currentuser]["l0l"][i] }}'>/{{ elementsByUser[currentuser]["l0l"][i] }}/</label><br>
+          {% for j in range(elementsByUser[currentuser]["l1l"][i]|length) %}
+            <input type="radio" id="l1b" value='1{{ i }}%%{{ elementsByUser[currentuser]["l1l"][i][j] }}' name="level">
+            <label for="elementsByUser[currentuser]['l1l'][i][j]">/{{ elementsByUser[currentuser]['l0l'][i] }}/{{ elementsByUser[currentuser]['l1l'][i][j] }}</label><br>
+            {% for k in range(elementsByUser[currentuser]["l2l"][i][j]|length) %}
+              <input type="radio" id="l2b" value='2{{ i }}%%{{ j }}%%{{ elementsByUser[currentuser]["l2l"][i][j][k]}}' name="level">
+              <label for='{{ elementsByUser[currentuser]["l2l"][i][j][k]}}'>/{{ elementsByUser[currentuser]["l0l"][i] }}/{{ elementsByUser[currentuser]["l1l"][i][j] }}/{{ elementsByUser[currentuser]["l2l"][i][j][k]}}</label><br>
+            {% endfor %}
+          {% endfor %}
+        {% endfor %}
+      {% else %}
+        <p>You have nothing to delete. Try creating something <a href="/formadd">new</a>.</p>
+      {% endif %}
+      <input type="submit" value="Submit">
+    </form>
+    {% endif %}
+  {% else %}
+    <p>Please <a href="/login">login</a> first</p>
+  {% endif %}
+{% endblock %}
+
+{% block footer %}
+  {% if currentuser %}
+    <p>To logout press <a href="/logout">here</a></p>
+  {% else %}
+    <p>Create an account or login <a href="/login">here</a></p>
+  {% endif %}
+{% endblock %}

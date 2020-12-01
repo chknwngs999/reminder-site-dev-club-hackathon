@@ -1,0 +1,52 @@
+{% extends "template.html"%}
+
+{% block title %}
+<title>Element Creation Form</title>
+{% endblock %}
+
+{% block header %}
+<h1 id="title">Element Creation Form</h1>
+{% endblock %}
+{% block images %}
+<a href="/"><img src="{{ url_for('static', filename='homebutton.png') }}" id="sign" width="40px" height="40px"></a>
+{% endblock %}
+
+{% block main %}
+  {% if currentuser %}
+    {% if message %}
+      <p>{{ message }}</p>
+    {% else %}
+    <form action="" method="post">
+      <label for="inputname">New Element Name: </label>
+      <input type="text" name="elementname" required><br><br>
+      <p id="label">Element Location: </p>
+      <input type="radio" id="nol" value='0' name="level" checked>
+      <label for ="/">/</label><br>
+      {% if elementsByUser[currentuser]["l0l"] %}
+        {% for i in range(elementsByUser[currentuser]["l0l"]|length) %}
+          <input type="radio" id="l0b" value='1{{ elementsByUser[currentuser]["l0l"][i] }}' name="level">
+          <label for ='{{ elementsByUser[currentuser]["l0l"][i] }}'>/{{ elementsByUser[currentuser]["l0l"][i] }}/</label><br>
+          {% if elementsByUser[currentuser]["l1l"][i] %}
+            {% for j in range(elementsByUser[currentuser]["l1l"][i]|length) %}
+              <input type="radio" id="l1b" value='2{{ i }}%%{{ elementsByUser[currentuser]["l1l"][i][j] }}' name="level">
+              <label for="elementsByUser[currentuser]['l1l'][i][j]">/{{ elementsByUser[currentuser]['l0l'][i] }}/{{ elementsByUser[currentuser]['l1l'][i][j] }}</label><br>
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      <br>
+      <input type="submit" value="submit">
+    </form>
+    {% endif %}
+  {% else %}
+    <p>Please <a href="/login">login</a> first</p>
+  {% endif %}
+{% endblock %}
+
+{% block footer %}
+  {% if currentuser %}
+    <p>To logout press <a href="/logout">here</a></p>
+  {% else %}
+    <p>Create an account or login <a href="/login">here</a></p>
+  {% endif %}
+{% endblock %}

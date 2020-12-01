@@ -1,0 +1,81 @@
+* {
+  margin: 0;
+}
+
+#sign {
+  background-color: black;
+  width: 40px;
+  height: 40px;
+  float: right;
+  border-radius: 15%;
+  margin: 20px 30px 0px 0px;
+}
+#sign:active {
+  transform: scale(1);
+  position: relative;
+}
+#sign:hover {
+  transform: scale(1.125);
+  position: relative;
+}
+
+.l0l {
+  list-style-type: square;
+  font-size: 30px;
+}
+.l1l {
+  list-style-type: disc;
+  font-size: 25px;
+}
+.l2l {
+  list-style-type: circle;
+  font-size: 20px;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+header {
+  box-sizing: border-box;
+  background-color: rgb(120, 227, 253);
+  width: 100%;
+  height: 80px;
+}
+main {
+  flex: 1;
+  z-index: 0;
+  width: 98%;
+  padding: 10px 1%;
+  font-size: 20px;
+  line-height: 30px;
+}
+footer {
+  background-color: rgb(120, 227, 253);
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+#title {
+  text-align: center;
+  font-size: 2vw;
+  float: center;
+  margin-top: 23px;
+  margin-bottom: 23px;
+}
+#titlediv {
+  width: 50%;
+  text-align: right;
+  float: left;
+}
+#titleimg {
+  width: 50%;
+  text-align: left;
+  float: left;
+}

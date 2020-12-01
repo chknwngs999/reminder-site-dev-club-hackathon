@@ -1,0 +1,33 @@
+{% extends "template.html"%}
+
+{% block title %}
+<title>Signup Form</title>
+{% endblock %}
+
+{% block header %}
+<h1 id="title">Signup Form</h1>
+{% endblock %}
+{% block images %}
+<a href="/"><img src="{{ url_for('static', filename='homebutton.png') }}" id="sign" width="40px" height="40px"></a>
+{% endblock %}
+
+{% block main %}
+  {% if message %}
+    <p>{{ message }}<a href="/login">here</a>.</p>
+  {% endif %}
+  <form action="" method="post">
+    <label for="username">New username: </label>
+    <input type="text" name="username" required><br>
+    <label for="Password">New password: </label>
+    <input type="password" name="password" required><br>
+    <input type="submit" value="submit">
+  </form>
+{% endblock %}
+
+{% block footer %}
+  {% if currentuser %}
+    <p>To logout press <a href="/logout">here</a></p>
+  {% else %}
+    <p>Already have an account? Login <a href="/login">here</a></p>
+  {% endif %}
+{% endblock %}

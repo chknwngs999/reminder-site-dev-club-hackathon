@@ -1,0 +1,20 @@
+{% extends "template.html" %}
+
+{% block title %}
+  <title>Error 404</title>
+{% endblock %}
+
+{% block header %}
+<h1 id="title">Logout</h1>
+{% endblock %}
+{% block images %}
+<a href="/"><img src="{{ url_for('static', filename='homebutton.png') }}" id="sign" width="40px" height="40px"></a>
+{% endblock %}
+
+{% block main %}
+  <p>You have been logged out. Click <a href="/login">here</a> to log back in.</p>
+{% endblock %}
+
+{% block footer %}
+  <p>Create an account or login <a href="/login">here</a></p>
+{% endblock %}

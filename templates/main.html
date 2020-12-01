@@ -1,0 +1,52 @@
+{% extends "template.html" %}
+
+
+{% block title %}
+  <title>To-Do Site</title>
+{% endblock %}
+
+{% block header %}
+  <h1 id="title">Your Reminders</h1>
+{% endblock %}
+{% block images %}
+  <a href="/formdelete/"><img src="{{ url_for('static', filename='minus-sign.png') }}" id="sign"></a>
+  <a href="/formadd/"><img src="{{ url_for('static', filename='plus-sign.png') }}" id="sign"></a>
+{% endblock %}
+
+{% block main %}
+  {% if currentuser %}
+    {% if elementsByUser[currentuser]["l0l"] %}
+      <ul class="l0l">
+      {% for i in range(elementsByUser[currentuser]["l0l"]|length) %}
+        <li class="">{{ elementsByUser[currentuser]["l0l"][i] }}</li>
+        {% if elementsByUser[currentuser]["l1l"][i] %}
+          <ul class="l1l">
+          {% for j in range(elementsByUser[currentuser]["l1l"][i]|length) %}
+            <li class="">{{ elementsByUser[currentuser]["l1l"][i][j] }}</li>
+            <ul class="l2l">
+            {% if elementsByUser[currentuser]["l2l"][i][j] %}
+              {% for k in range(elementsByUser[currentuser]["l2l"][i][j]|length) %}
+                <li class="">{{ elementsByUser[currentuser]["l2l"][i][j][k] }}</li>
+              {% endfor %}
+            {% endif %}
+            </ul>
+          {% endfor %}
+          </ul>
+        {% endif %}
+      {% endfor %}
+    </ul>
+    {% else %}
+      <p>There's nothing here. Try creating something <a href="/formadd">new</a>.</p>
+    {% endif %}
+  {% else %}
+    <p>Please <a href="/login">login</a> first</p>
+  {% endif %}
+{% endblock %}
+
+{% block footer %}
+  {% if currentuser %}
+    <p>To logout press <a href="/logout">here</a></p>
+  {% else %}
+    <p>Create an account <a href="/signup">here</a> or login <a href="/login">here</a></p>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "template.html" %}
+
+{% block title %}
+  <title>Error 404</title>
+{% endblock %}
+
+{% block header %}
+<h1 id="title">Error 404</h1>
+{% endblock %}
+{% block images %}
+<a href="/"><img src="{{ url_for('static', filename='homebutton.png') }}" id="sign" width="40px" height="40px"></a>
+{% endblock %}
+
+{% block main %}
+<p>The page you were looking for was not found.</p>
+{% endblock %}
+
+{% block footer %}
+  {% if currentuser %}
+    <p>To logout press <a href="/logout">here</a></p>
+  {% else %}
+    <p>Create an account or login <a href="/login">here</a></p>
+  {% endif}
+{% endblock %}

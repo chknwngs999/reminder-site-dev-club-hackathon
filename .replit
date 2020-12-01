@@ -1,2 +1,3 @@
-language = "bash"
-run = ""
+language = "python3"
+run = "python run.py"
+onBoot="echo Booting up!"
