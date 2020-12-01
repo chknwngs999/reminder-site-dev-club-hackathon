@@ -4,8 +4,6 @@ import pickle
 app = Flask(__name__)
 
 currentuser = ""
-#multiple people using at once?
-#duplication bug - same name elements not filtered, no way to change design/background stuff, login not secure, can't delete users?
 
 file = open("save", "rb")
 elementsByUser = pickle.load(file)
@@ -186,9 +184,7 @@ def formdelete():
 if __name__ == '__main__':
   app.run(debug=True, host='0.0.0.0')
 
-#styling? - color settings if time allows
-
-#sessions, color/background/text settings, fix login?https://hackersandslackers.com/flask-login-user-authentication/
+#https://hackersandslackers.com/flask-login-user-authentication/
 
 #https://flask.palletsprojects.com/en/1.1.x/
 #popup screen like gamepress.gg/grandorder/4-star-tier-li
@@ -198,4 +194,5 @@ if __name__ == '__main__':
 #html stuff: popup - https://www.w3schools.com/js/js_popup.asp; dropdown - https://www.w3schools.com/howto/howto_js_dropdown.asp
 #pickle - https://stackoverflow.com/questions/31891286/keeping-the-data-of-a-variable-between-runs-of-code, https://www.datacamp.com/community/tutorials/pickle-python-tutorial#whatfor, https://www.geeksforgeeks.org/save-a-dictionary-to-a-file/#:~:text=Text%20Files,the%20dictionary%20into%20a%20string
 
-#future - login fix, description, due date, calendar view/schedule based on importance, set themes/backgrounds
+#duplication bug - same name elements not filtered, no way to change design/background stuff, login not secure, can't delete users?, currentuser var == one person at a time
+#future - login fix (sessions), description, due date, calendar view/schedule based on importance, set themes/backgrounds
