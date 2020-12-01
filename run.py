@@ -5,6 +5,7 @@ app = Flask(__name__)
 
 currentuser = ""
 #multiple people using at once?
+#duplication bug - same name elements not filtered, no way to change design/background stuff, login not secure, can't delete users?
 
 file = open("save", "rb")
 elementsByUser = pickle.load(file)
@@ -23,7 +24,6 @@ def home():
   file.close()
 
   return render_template('main.html', elementsByUser=elementsByUser, currentuser=currentuser)
-
 @app.route('/login/', methods=["get", "post"])
 def login():
   global currentuser, elementsByUser
@@ -91,15 +91,22 @@ def formadd():
     newName = request.form.get('elementname')
     if location[0] == "0":
       location = location[1:]
-      elementsByUser[currentuser]["l0l"].append(newName)
-      elementsByUser[currentuser]["l1l"].append([])
-      message = "Element successfully added."
+      if location not in elementsByUser[currentuser]["l0l"]:
+        elementsByUser[currentuser]["l0l"].append(newName)
+        elementsByUser[currentuser]["l1l"].append([])
+        elementsByUser[currentuser]["l2l"].append([[]])
+        message = "Element successfully added."
+      else:
+        message = "You already have an element with the same name."
     elif location[0] == "1":
       location = location[1:]
       dex = elementsByUser[currentuser]["l0l"].index(location)
-      elementsByUser[currentuser]["l1l"][dex].append(newName)
-      elementsByUser[currentuser]["l2l"][dex].append([])
-      message = "Element successfully added."
+      if location not in elementsByUser[currentuser]["l1l"][dex]:
+        elementsByUser[currentuser]["l1l"][dex].append(newName)
+        elementsByUser[currentuser]["l2l"][dex].append([])
+        message = "Element successfully added."
+      else:
+        message = "You already have an element with the same name."
     elif location[0] == "2":
       location = location[1:]
       for i in range(len(location)):
@@ -109,8 +116,10 @@ def formadd():
           break
       for j in range(len(elementsByUser[currentuser]["l1l"][zeroloc])):
         if elementsByUser[currentuser]["l1l"][zeroloc][j] == location:
-          elementsByUser[currentuser]["l2l"][zeroloc][j].append(newName)
-          break
+          if location not in elementsByUser[currentuser]["l2l"][zeroloc][j]:
+            elementsByUser[currentuser]["l2l"][zeroloc][j].append(newName)
+          else:
+            message = "You already have an element with the same name."
       message = "Element successfully added."
     file = open("save", "wb")
     pickle.dump(elementsByUser, file)
@@ -133,7 +142,8 @@ def formdelete():
       dex = elementsByUser[currentuser]["l0l"].index(location)
       elementsByUser[currentuser]["l0l"].remove(location)
       del elementsByUser[currentuser]["l1l"][dex]
-      del elementsByUser[currentuser]["l2l"][dex]
+      if elementsByUser[currentuser]["l2l"][dex]:
+        del elementsByUser[currentuser]["l2l"][dex]
       message = "Element and all contained sub-elements have been deleted."
     elif location[0] == "1":
       location = location[1:]
@@ -144,7 +154,8 @@ def formdelete():
           break
       dex = elementsByUser[currentuser]["l1l"][zeroloc].index(location)
       elementsByUser[currentuser]["l1l"][zeroloc].remove(location)
-      del elementsByUser[currentuser]["l2l"][zeroloc][dex]
+      if elementsByUser[currentuser]["l2l"][zeroloc][dex]:
+        del elementsByUser[currentuser]["l2l"][zeroloc][dex]
       message = "Element and all contained sub-elements have been deleted."
     elif location[0] == "2":
       location = location[1:]
@@ -175,7 +186,7 @@ def formdelete():
 if __name__ == '__main__':
   app.run(debug=True, host='0.0.0.0')
 
-#github, styling?
+#styling? - color settings if time allows
 
 #sessions, color/background/text settings, fix login?https://hackersandslackers.com/flask-login-user-authentication/
 
@@ -186,3 +197,5 @@ if __name__ == '__main__':
 #Forms/WTForms: https://gist.github.com/doobeh/4667330, https://stackoverflow.com/questions/11556958/sending-data-from-html-form-to-a-python-script-in-flask, https://overiq.com/flask-101/form-handling-in-flask/
 #html stuff: popup - https://www.w3schools.com/js/js_popup.asp; dropdown - https://www.w3schools.com/howto/howto_js_dropdown.asp
 #pickle - https://stackoverflow.com/questions/31891286/keeping-the-data-of-a-variable-between-runs-of-code, https://www.datacamp.com/community/tutorials/pickle-python-tutorial#whatfor, https://www.geeksforgeeks.org/save-a-dictionary-to-a-file/#:~:text=Text%20Files,the%20dictionary%20into%20a%20string
+
+#future - login fix, description, due date, calendar view/schedule based on importance, set themes/backgrounds
